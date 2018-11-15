@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://code.alibabatech.com/schema/dubbo
+    http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+	<dubbo:consumer check="false" />
+	<dubbo:registry check="false" />
+
+	<dubbo:application name="consumer" />
+	<!-- 使用multicast广播注册中心暴露发现服务地址 -->
+	<!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+	<dubbo:registry
+		address="zookeeper://47.96.103.19:2181?backup=47.96.103.19:2182,47.96.103.19:2183" />
+	<!-- 生成远程服务代理，可以和本地bean一样调用 -->
+	<dubbo:reference id="userService" interface="com.example.demo.sss.UserService" />
+
+	<!--关闭某个服务的启动时检查 (没有提供者时报错)： 
+	关闭所有服务的启动时检查 (没有提供者时报错)：
+
+	<dubbo:consumer check="false" />
+
+	关闭注册中心启动时检查 (注册订阅失败时报错)：
+
+	<dubbo:registry check="false" />-->
+
+<!-- 
+	<dubbo:service interface="com.example.demo.sss.UserService" loadbalance="roundrobin" /> -->
+	<dubbo:reference interface="com.example.demo.sss.UserService" loadbalance="roundrobin"  cache="lru" mock="return null"/>
+	
+	<dubbo:protocol accesslog="true" />
+<!-- 	<dubbo:protocol accesslog="http://10.20.160.198/wiki/display/dubbo/foo/bar.log" /> -->
+	
+	</beans>

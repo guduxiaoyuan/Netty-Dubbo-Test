@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+      http://www.springframework.org/schema/context/spring-context-3.1.xsd
+       http://code.alibabatech.com/schema/dubbo
+      http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <description>dubbo注册仓库配置</description>
+    <!--/加载配置文件，主要用来存放一些参数-->
+    <!--<context:property-placeholder location="classpath:dubbo.properties" ignore-unresolvable="true"/>-->
+    <!--  //引入Provider Consumer 配置-->
+    <!--    <import resource="app-rpc-provider.xml"/>
+        <import resource="app-rpc-consumer.xml"/>-->
+    <dubbo:application name="demo" owner="demo"  logger="log4j"/>
+    <!--设置provider的全句日志级别-->
+    <dubbo:provider filter="TestFilter">
+        <dubbo:parameter key="qloglevel" value="5"/>
+    </dubbo:provider>
+
+    <dubbo:protocol port="-1"/>
+
+    <!--注册仓库配置 id为注册仓库的唯一区分名 在Consumer 引用和Provider提供服务时注册到特定的注册仓库时使用
+            protocol指定dubbo采用的注册中心。address为注册中心的服务地址。 group 为分组，如果想要分开测试环境和生产环境可     以采用分组方式，如果一个接口多个实现可以注册到不同的分组里面
+-->
+
+
+
+    <dubbo:registry protocol="zookeeper" address="zookeeper://47.96.103.19:2181?backup=47.96.103.19:2182,47.96.103.19:2183"/>
+
+    <dubbo:protocol name="dubbo" port="-1" />
+    <!-- 声明需要暴露的服务接口（注意是接口,不是实现类） -->
+    <dubbo:service interface="com.example.demo.sss.UserService" ref="userService" />
+    <!-- 这里是具体实现类,id和上面的暴露的服务接口ref要一致,dubbo就是通过这个来注册对应的服务 -->
+    <bean id="userService" class="com.example.demo.sss.UserServiceImpl"></bean>
+</beans>

@@ -40,15 +40,22 @@
 			<artifactId>dubbo-spring-boot-starter</artifactId>
 			<version>2.0.0</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.example</groupId>
 			<artifactId>provvv</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+			<scope>system</scope>
+			<systemPath>D:/repository/com/example/provvv/0.0.2-SNAPSHOT/provvv-0.0.2-SNAPSHOT.jar</systemPath>
+		</dependency> -->
 		<dependency>
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
 			<version>0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>com.example.demo</groupId>
+			<artifactId>provvv</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 		<!--<dependency>
 			<groupId>com.example.zhaohyuan</groupId>
